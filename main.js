@@ -74,7 +74,10 @@ while (agregarPedido) {
     );
     totalApagar += netoApagar + totalAdicional;
     alert(`El monto a abonar es de $ ${totalApagar}`);
-  }
+  } else
+    alert(
+      "No ha ingresado una opcion valida. Por favor ingrese los item en minúsculas"
+    );
   agregarPedido = confirm("¿Desea agreagar algun producto más?");
 }
 alert(

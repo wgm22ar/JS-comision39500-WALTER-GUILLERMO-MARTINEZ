@@ -1,4 +1,6 @@
 alert(" Bienvenidos a Gennaro s Pizzas & Empanadas ");
+let nombreUsuario = prompt("Ingrese el nombre de Ususario: ");
+let direccionEnvio = prompt("Por favor ingrese la dirirección de envio: ");
 const producto = prompt(
   "Quiere realizar un pedido de \n a) Pizzas \n b) Empanadas \n c) Bedidas "
 );
@@ -57,3 +59,6 @@ while (agregarPedido) {
   }
   agregarPedido = confirm("¿Desea agreagar algun producto más?");
 }
+alert(
+  `Su pedido ${nombreUsuario} será enviado a la brevedad a ${direccionEnvio}. Muchas gracias por confiar en el sabor y calidad de Gennaros Pizzas & Empanadas`
+);

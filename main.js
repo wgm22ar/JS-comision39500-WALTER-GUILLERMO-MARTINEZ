@@ -34,10 +34,6 @@ let precioAdicional = 0;
 let totalAdicional = 0;
 let totalApagar = 0;
 
-// const precioPizza = 100;
-// const precioEmpanada = 20;
-// const precioBebida = 50;
-
 if (producto == "pizzas") {
   totalProducto = Number(prompt("Ingrese la cantidad deseada :"));
   netoApagar = totalProducto * arrayProductos[0].precio;

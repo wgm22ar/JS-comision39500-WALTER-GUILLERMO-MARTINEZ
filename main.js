@@ -2,18 +2,27 @@ alert(" Bienvenidos a Gennaro s Pizzas & Empanadas ");
 let nombreUsuario = prompt("Ingrese el nombre de Ususario: ");
 let direccionEnvio = prompt("Por favor ingrese la dirirección de envio: ");
 class Producto {
-  constructor(nombre, precio) {
+  constructor(nombre, precio, costoEnvio) {
     this.nombre = nombre;
     this.precio = precio;
+    this.costoEnvio = costoEnvio;
   }
 }
 
-const pizzas = new Producto("Pizzas", 100);
-const empanadas = new Producto("Empanadas", 20);
-const bebidas = new Producto("Bebidas", 50);
+const pizzas = new Producto("Pizzas", 100, 20);
+const empanadas = new Producto("Empanadas", 20, 4);
+const bebidas = new Producto("Bebidas", 50, 10);
 
 const arrayProductos = [pizzas, empanadas, bebidas];
 console.log(arrayProductos);
+
+const seccionProductos = document.getElementById("seccionProductos");
+arrayProductos.forEach((producto) => {
+  const div = document.createElement("div");
+  div.innerHTML = `<p>Nuestras ${producto.nombre}</p>
+  <p> Precio: $ ${producto.precio}</p>`;
+  seccionProductos.appendChild(div);
+});
 const producto = prompt(
   "Quiere realizar un pedido de \n a) Pizzas \n b) Empanadas \n c) Bedidas "
 );
@@ -91,6 +100,16 @@ while (agregarPedido) {
       "No ha ingresado una opcion valida. Por favor ingrese los item en minúsculas"
     );
   agregarPedido = confirm("¿Desea agreagar algun producto más?");
+}
+if (totalApagar >= 350) {
+  alert(`El costo de envio es gratuito`);
+} else {
+  let precioFinal = arrayProductos.reduce(
+    (acumulador, elemento) => acumulador + elemento.costoEnvio,
+    0
+  );
+  totalApagar = totalApagar + precioFinal;
+  console.log(precioFinal);
 }
 alert(
   `Su pedido ${nombreUsuario} será enviado a la brevedad a ${direccionEnvio}. El total a abonar es de $ ${totalApagar} Muchas gracias por confiar en el sabor y calidad de Gennaros Pizzas & Empanadas`

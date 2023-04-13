@@ -26,6 +26,7 @@ arrayProductos.forEach((producto) => {
 const producto = prompt(
   "Quiere realizar un pedido de \n a) Pizzas \n b) Empanadas \n c) Bedidas "
 );
+productoInicial = producto.toLowerCase(producto);
 
 let cantidadPedida = 0;
 let netoApagar = 0;
@@ -34,21 +35,21 @@ let precioAdicional = 0;
 let totalAdicional = 0;
 let totalApagar = 0;
 
-if (producto == "pizzas") {
+if (productoInicial == "pizzas") {
   totalProducto = Number(prompt("Ingrese la cantidad deseada :"));
   netoApagar = totalProducto * arrayProductos[0].precio;
   console.log(
     `Ud pidio ${totalProducto} ${producto}.El monto a abonar es de $ ${netoApagar}`
   );
   alert(`El monto a abonar es de $ ${netoApagar}`);
-} else if (producto == "empanadas") {
+} else if (productoInicial == "empanadas") {
   totalProducto = Number(prompt("Ingrese la cantidad deseada :"));
   netoApagar = totalProducto * arrayProductos[1].precio;
   console.log(
     `Ud pidio ${totalProducto} ${producto}.El monto a abonar es de $ ${netoApagar}`
   );
   alert(`El monto a abonar es de $ ${netoApagar}`);
-} else if (producto == "bebidas") {
+} else if (productoInicial == "bebidas") {
   totalProducto = Number(prompt("Ingrese la cantidad deseada :"));
   netoApagar = totalProducto * arrayProductos[2].precio;
   console.log(
@@ -66,7 +67,8 @@ while (agregarPedido) {
   productoAdicional = prompt(
     "Que desea agrear \n a) Pizzas \n b) Empanadas \n c) Bedidas "
   );
-  if (productoAdicional == "pizzas") {
+  productoAdicionalInicial = productoAdicional.toLowerCase(productoAdicional);
+  if (productoAdicionalInicial == "pizzas") {
     cantidadAdicional = Number(prompt("Ingrese la cantidad deseada :"));
 
     totalAdicional = arrayProductos[0].precio * cantidadAdicional;
@@ -75,7 +77,7 @@ while (agregarPedido) {
     );
     totalApagar += netoApagar + totalAdicional;
     alert(`El monto a abonar es de $ ${totalApagar}`);
-  } else if (productoAdicional == "empanadas") {
+  } else if (productoAdicionalInicial == "empanadas") {
     cantidadAdicional = Number(prompt("Ingrese la cantidad deseada :"));
     totalAdicional = arrayProductos[1].precio * cantidadAdicional;
     console.log(
@@ -83,7 +85,7 @@ while (agregarPedido) {
     );
     totalApagar += netoApagar + totalAdicional;
     alert(`El monto a abonar es de $ ${totalApagar}`);
-  } else if (productoAdicional == "bebidas") {
+  } else if (productoAdicionalInicial == "bebidas") {
     cantidadAdicional = Number(prompt("Ingrese la cantidad deseada :"));
     totalAdicional = arrayProductos[2].precio * cantidadAdicional;
     console.log(

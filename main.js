@@ -1,114 +1,118 @@
-alert(" Bienvenidos a Gennaro s Pizzas & Empanadas ");
-let nombreUsuario = prompt("Ingrese el nombre de Ususario: ");
-let direccionEnvio = prompt("Por favor ingrese la dirirección de envio: ");
-class Producto {
-  constructor(nombre, precio, costoEnvio) {
-    this.nombre = nombre;
-    this.precio = precio;
-    this.costoEnvio = costoEnvio;
-  }
-}
+// CREO LPOS PRODUCTOS DE MI COMERCIO EN UN ARRAY
+const productosBase = [
+  {
+    name: "Pizza Muzzarella",
+    id: "pi01",
+    precio: 950,
+  },
+  { name: "Pizza Fugazzetta", id: "pi02", precio: 1210 },
+  { name: "Empanada Carne", id: "emp01", precio: 250 },
+  { name: "Empanada JyQ", id: "emp02", precio: 250 },
+  { name: "Coca-Cola", id: "beb01", precio: 870 },
+  { name: "Cerveza Quilmes", id: "cerv01", precio: 970 },
+];
+//CARGA DEL LOCALSTORAGE
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-const pizzas = new Producto("Pizzas", 100, 20);
-const empanadas = new Producto("Empanadas", 20, 4);
-const bebidas = new Producto("Bebidas", 50, 10);
+//CALCULO DEL TOTAL DE MI CARRITO DE COMPRAS FINAL
+const totalCarritoRender = () => {
+  const carritoTotal = document.getElementById("carritoTotal");
+  let total = carrito.reduce((acumulador, { precio, cantidad }) => {
+    return acumulador + precio * cantidad;
+  }, 0);
+  carritoTotal.innerHTML = `El total a Pagar es: $ ${total}`;
+};
 
-const arrayProductos = [pizzas, empanadas, bebidas];
-console.log(arrayProductos);
+const agregarCarrito = (objetoCarrito) => {
+  carrito.push(objetoCarrito);
+  totalCarritoRender();
+};
 
-const seccionProductos = document.getElementById("seccionProductos");
-arrayProductos.forEach((producto) => {
-  const div = document.createElement("div");
-  div.innerHTML = `<p>Nuestras ${producto.nombre}</p>
-  <p> Precio: $ ${producto.precio}</p>`;
-  seccionProductos.appendChild(div);
+const renderizarCarrito = () => {
+  const listaCarrito = document.getElementById("listaCarrito");
+  listaCarrito.innerHTML = "";
+  carrito.forEach(({ name, precio, id, cantidad }) => {
+    let elementoLista = document.createElement("li");
+    elementoLista.innerHTML = `Producto:${name} / Precio: ${precio} / Cant.:${cantidad} <button id="eliminarCarrito${id}">X</button>`;
+    listaCarrito.appendChild(elementoLista);
+    const botonBorrar = document.getElementById(`eliminarCarrito${id}`);
+    botonBorrar.addEventListener("click", () => {
+      carrito = carrito.filter((elemento) => {
+        if (elemento.id !== id) {
+          return elemento;
+        }
+      });
+      let carritoString = JSON.stringify(carrito);
+      localStorage.setItem("carrito", carritoString);
+      renderizarCarrito();
+    });
+    let carritoString = JSON.stringify(carrito);
+    localStorage.setItem("carrito", carritoString);
+  });
+};
+
+const borrarCarrito = () => {
+  carrito = [];
+  let carritoString = JSON.stringify(carrito);
+  localStorage.setItem("carrito", carritoString);
+  renderizarCarrito();
+};
+
+const renderizarProductos = () => {
+  // OPERACION DEL DOM DE LOS PRODUCTOS
+
+  const contenedorProductos = document.getElementById("contenedorProductos");
+  productosBase.forEach(({ name, id, precio }) => {
+    const presentacion = document.createElement("div");
+    presentacion.innerHTML = `
+            <div class="card m-2 p-2 " style="width: 20rem;" id="producto${id}">
+                <img src="./img/${
+                  name + id
+                }.png" class="card-img-top flex-row" alt="${name}">
+                <div class="card-body flex-center m-5 p-2 ">
+                    <h5 class="card-title">${name}</h5>
+                    <span>Precio por Unidad $ ${precio}</span>
+                    <form id="form${id}" class="m-2 p-2">
+                        <label for="contador${id}">Cantidad</label>
+                        <input type="number" placeholder="0" id="contador${id}">
+                        <button class="btn btn-success m-2 center" id="botonProd${id}">Agregar</button>
+                    </form>
+                </div>
+            </div>`;
+    contenedorProductos.appendChild(presentacion);
+    const btn = document.getElementById(`botonProd${id}`);
+
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const totalCantidaProductos = Number(
+        document.getElementById(`contador${id}`).value
+      );
+      if (totalCantidaProductos > 0) {
+        agregarCarrito({
+          name,
+          id,
+          precio,
+          cantidad: totalCantidaProductos,
+        });
+        renderizarCarrito();
+        const form = document.getElementById(`form${id}`);
+        form.reset();
+      }
+    });
+  });
+};
+//   FINALIZACION DE LA COMPRA
+const cerrarCompra = () => {
+  borrarCarrito();
+  let mensaje = document.getElementById("carritoTotal");
+  mensaje.innerHTML =
+    "Su pedido será enviado a la brevedad. Muchas gracias por confiar en el sabor y calidad de Gennaros Pizzas & Empanadas";
+};
+
+const compraFinal = document.getElementById("botonCompraFinal");
+compraFinal.addEventListener("click", () => {
+  cerrarCompra();
 });
-const producto = prompt(
-  "Quiere realizar un pedido de \n a) Pizzas \n b) Empanadas \n c) Bedidas "
-);
-productoInicial = producto.toLowerCase(producto);
 
-let cantidadPedida = 0;
-let netoApagar = 0;
-let precioProducto = 0;
-let precioAdicional = 0;
-let totalAdicional = 0;
-let totalApagar = 0;
-
-if (productoInicial == "pizzas") {
-  totalProducto = Number(prompt("Ingrese la cantidad deseada :"));
-  netoApagar = totalProducto * arrayProductos[0].precio;
-  console.log(
-    `Ud pidio ${totalProducto} ${producto}.El monto a abonar es de $ ${netoApagar}`
-  );
-  alert(`El monto a abonar es de $ ${netoApagar}`);
-} else if (productoInicial == "empanadas") {
-  totalProducto = Number(prompt("Ingrese la cantidad deseada :"));
-  netoApagar = totalProducto * arrayProductos[1].precio;
-  console.log(
-    `Ud pidio ${totalProducto} ${producto}.El monto a abonar es de $ ${netoApagar}`
-  );
-  alert(`El monto a abonar es de $ ${netoApagar}`);
-} else if (productoInicial == "bebidas") {
-  totalProducto = Number(prompt("Ingrese la cantidad deseada :"));
-  netoApagar = totalProducto * arrayProductos[2].precio;
-  console.log(
-    `Ud pidio ${totalProducto} ${producto}.El monto a abonar es de $ ${netoApagar}`
-  );
-  alert(`El monto a abonar es de $ ${netoApagar}`);
-} else
-  alert(
-    "No ha ingresado una opcion valida. Por favor ingrese los item en minúsculas"
-  );
-
-let agregarPedido = true;
-
-while (agregarPedido) {
-  productoAdicional = prompt(
-    "Que desea agrear \n a) Pizzas \n b) Empanadas \n c) Bedidas "
-  );
-  productoAdicionalInicial = productoAdicional.toLowerCase(productoAdicional);
-  if (productoAdicionalInicial == "pizzas") {
-    cantidadAdicional = Number(prompt("Ingrese la cantidad deseada :"));
-
-    totalAdicional = arrayProductos[0].precio * cantidadAdicional;
-    console.log(
-      `Ud agregó ${cantidadAdicional} ${productoAdicional}. El monto adicional es de $ ${totalAdicional}`
-    );
-    totalApagar += netoApagar + totalAdicional;
-    alert(`El monto a abonar es de $ ${totalApagar}`);
-  } else if (productoAdicionalInicial == "empanadas") {
-    cantidadAdicional = Number(prompt("Ingrese la cantidad deseada :"));
-    totalAdicional = arrayProductos[1].precio * cantidadAdicional;
-    console.log(
-      `Ud agregó ${cantidadAdicional} ${productoAdicional}. El monto adicional es de $ ${totalAdicional}`
-    );
-    totalApagar += netoApagar + totalAdicional;
-    alert(`El monto a abonar es de $ ${totalApagar}`);
-  } else if (productoAdicionalInicial == "bebidas") {
-    cantidadAdicional = Number(prompt("Ingrese la cantidad deseada :"));
-    totalAdicional = arrayProductos[2].precio * cantidadAdicional;
-    console.log(
-      `Ud agregó ${cantidadAdicional} ${productoAdicional}. El monto adicional es de $ ${totalAdicional}`
-    );
-    totalApagar += netoApagar + totalAdicional;
-    alert(`El monto a abonar es de $ ${totalApagar}`);
-  } else
-    alert(
-      "No ha ingresado una opcion valida. Por favor ingrese los item en minúsculas"
-    );
-  agregarPedido = confirm("¿Desea agreagar algun producto más?");
-}
-if (totalApagar >= 350) {
-  alert(`El costo de envio es gratuito`);
-} else {
-  let precioFinal = arrayProductos.reduce(
-    (acumulador, elemento) => acumulador + elemento.costoEnvio,
-    0
-  );
-  totalApagar = totalApagar + precioFinal;
-  console.log(precioFinal);
-}
-alert(
-  `Su pedido ${nombreUsuario} será enviado a la brevedad a ${direccionEnvio}. El total a abonar es de $ ${totalApagar} Muchas gracias por confiar en el sabor y calidad de Gennaros Pizzas & Empanadas`
-);
+renderizarProductos();
+renderizarCarrito();

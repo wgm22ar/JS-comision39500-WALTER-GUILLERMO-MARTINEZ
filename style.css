@@ -1,0 +1,42 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.tituloPrincipal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  margin: 10px;
+  font-style: italic;
+  background-color: rgba(0, 255, 85, 0.164);
+}
+.cuerpoGeneral {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 10px;
+  padding: 20px;
+  background-color: rgba(0, 255, 85, 0.637);
+}
+.contenedor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 10px;
+  padding: 20px;
+  background-color: rgba(0, 255, 85, 0.164);
+}
+.seccionCarrito {
+  margin: 10px;
+  font-style: italic bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}

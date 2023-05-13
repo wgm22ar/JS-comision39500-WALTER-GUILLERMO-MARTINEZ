@@ -1,18 +1,4 @@
-const bienvenida = document.getElementById("general");
-
-function mostrarMensaje() {
-  Swal.fire({
-    icon: "success",
-    title: "Bienvenidos a Gennaro's Pizzas & Empanadas",
-    text: "Donde están las mejores Pizzas y Empanadas que vas a probar",
-  });
-
-  bienvenida.removeEventListener("click", mostrarMensaje);
-}
-
-bienvenida.addEventListener("click", mostrarMensaje);
-
-// CREO LOS PRODUCTOS DE MI COMERCIO EN UN ARRAY
+// CREO LPOS PRODUCTOS DE MI COMERCIO EN UN ARRAY
 const productosBase = [
   {
     name: "Pizza Muzzarella",
@@ -78,22 +64,21 @@ const renderizarProductos = () => {
   const contenedorProductos = document.getElementById("contenedorProductos");
   productosBase.forEach(({ name, id, precio }) => {
     const presentacion = document.createElement("div");
-    presentacion.classList.add("col-xl-4", "col-md-6", "col-xp-12");
     presentacion.innerHTML = `
-            <div class="card m-2 p-2 " style="width: 20rem;" id="producto${id}">
-                <img src="./img/${
-                  name + id
-                }.png" class="card-img-top flex-row" alt="${name}">
-                <div class="card-body flex-center m-5 p-2 ">
-                    <h5 class="card-title">${name}</h5>
-                    <span>Precio por Unidad $ ${precio}</span>
-                    <form id="form${id}" class="m-2 p-2">
-                        <label for="contador${id}">Cantidad</label>
-                        <input type="number" placeholder="0" id="contador${id}">
-                        <button class="btn btn-success m-2 center" id="botonProd${id}">Agregar al Carrito</button>
-                    </form>
-                </div>
-            </div>`;
+              <div class="card m-2 p-2 " style="width: 20rem;" id="producto${id}">
+                  <img src="./img/${
+                    name + id
+                  }.png" class="card-img-top flex-row" alt="${name}">
+                  <div class="card-body flex-center m-5 p-2 ">
+                      <h5 class="card-title">${name}</h5>
+                      <span>Precio por Unidad $ ${precio}</span>
+                      <form id="form${id}" class="m-2 p-2">
+                          <label for="contador${id}">Cantidad</label>
+                          <input type="number" placeholder="0" id="contador${id}">
+                          <button class="btn btn-success m-2 center" id="botonProd${id}">Agregar</button>
+                      </form>
+                  </div>
+              </div>`;
     contenedorProductos.appendChild(presentacion);
     const btn = document.getElementById(`botonProd${id}`);
 
@@ -119,47 +104,15 @@ const renderizarProductos = () => {
 //   FINALIZACION DE LA COMPRA
 const cerrarCompra = () => {
   borrarCarrito();
+  let mensaje = document.getElementById("carritoTotal");
+  mensaje.innerHTML =
+    "Su pedido será enviado a la brevedad. Muchas gracias por confiar en el sabor y calidad de Gennaros Pizzas & Empanadas";
 };
 
 const compraFinal = document.getElementById("botonCompraFinal");
 compraFinal.addEventListener("click", () => {
   cerrarCompra();
-  Swal.fire({
-    icon: "success",
-    title: "Felicitaciones!!! Su pedido se ha realizado correctamente.",
-    text: "Será enviado a la brevedad. Gracias por confiar en nosotros!!",
-  });
 });
-//
-fetch("https://jsonplaceholder.typicode.com/comments?postId=1")
-  .then((response) => response.json())
-  .then((json) => {
-    console.log(json); // Verifica si los datos son recibidos
-    const contenedorComentarios = document.getElementById(
-      "contenedorComentario"
-    );
-    const presentacionComentarios = document.createElement("div");
-    presentacionComentarios.innerHTML =
-      "<h2>Algunas opiniones de nuestros productos</h2>";
-
-    json.forEach((comentario) => {
-      const comentarioElemento = document.createElement("div");
-      comentarioElemento.innerHTML = `
-        <p>Usuario: ${comentario.email}</p>
-        <p>Comentario: ${comentario.body}</p>
-      `;
-
-      presentacionComentarios.appendChild(comentarioElemento);
-    });
-
-    contenedorComentarios.appendChild(presentacionComentarios);
-  })
-  .catch((error) => {
-    console.error(
-      "Disculpe los inconvenientes, pero los comentarios no se han podido visualizar correctamente",
-      error
-    );
-  });
 
 renderizarProductos();
 renderizarCarrito();

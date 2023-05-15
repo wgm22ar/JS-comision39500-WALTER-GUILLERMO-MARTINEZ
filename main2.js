@@ -48,7 +48,7 @@ const totalCarritoRender = () => {
   let total = carrito.reduce((acumulador, { precio, cantidad }) => {
     return acumulador + precio * cantidad;
   }, 0);
-  carritoTotal.innerHTML = `El total a Pagar es: $ ${total}`;
+  carritoTotal.innerHTML = `<b>El total a Pagar es: $ ${total}</b>`;
 };
 
 const agregarCarrito = (objetoCarrito) => {

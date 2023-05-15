@@ -20,10 +20,24 @@ const productosBase = [
     precio: 950,
   },
   { name: "Pizza Fugazzetta", id: "pi02", precio: 1210 },
+  { name: "Pizza Muzzarella y Albahaca", id: "pi03", precio: 1280 },
+  { name: "Pizza Muzzarella y Panceta", id: "pi04", precio: 1350 },
+  { name: "Pizza Muzzarella y Hongos", id: "pi05", precio: 1400 },
+  { name: "Pizza Muzzarella y Longaniza", id: "pi06", precio: 1750 },
+  { name: "Pizza Fugazzetta y Longaniza", id: "pi07", precio: 1950 },
   { name: "Empanada Carne", id: "emp01", precio: 250 },
   { name: "Empanada JyQ", id: "emp02", precio: 250 },
-  { name: "Coca-Cola", id: "beb01", precio: 870 },
+  { name: "Coca-Cola Zero", id: "beb01", precio: 870 },
+  { name: "Coca-Cola Original", id: "beb02", precio: 850 },
+  { name: "7 Up Zero", id: "beb03", precio: 830 },
+  { name: "7 Up Original", id: "beb04", precio: 850 },
+  { name: "Agua Tonica Schweppes", id: "beb05", precio: 900 },
+  { name: "Schweppes Pomelo", id: "beb06", precio: 880 },
   { name: "Cerveza Quilmes", id: "cerv01", precio: 970 },
+  { name: "Cerveza Quilmes 1890", id: "cerv02", precio: 990 },
+  { name: "Cerveza Quilmes Bock", id: "cerv03", precio: 990 },
+  { name: "Cerveza Heineken", id: "cerv04", precio: 1100 },
+  { name: "Cerveza Stella", id: "cerv05", precio: 1150 },
 ];
 //CARGA DEL LOCALSTORAGE
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
@@ -47,7 +61,7 @@ const renderizarCarrito = () => {
   listaCarrito.innerHTML = "";
   carrito.forEach(({ name, precio, id, cantidad }) => {
     let elementoLista = document.createElement("li");
-    elementoLista.innerHTML = `Producto:${name} / Precio: ${precio} / Cant.:${cantidad} <button id="eliminarCarrito${id}">X</button>`;
+    elementoLista.innerHTML = `<b>Producto:</b>  ${name} / <b>Precio:</b>  ${precio} / <b>Cant.:</b>  ${cantidad} <button id="eliminarCarrito${id}"><b> X </b></button>`;
     listaCarrito.appendChild(elementoLista);
     const botonBorrar = document.getElementById(`eliminarCarrito${id}`);
     botonBorrar.addEventListener("click", () => {
@@ -85,12 +99,12 @@ const renderizarProductos = () => {
                   name + id
                 }.png" class="card-img-top flex-row" alt="${name}">
                 <div class="card-body flex-center m-5 p-2 ">
-                    <h5 class="card-title">${name}</h5>
-                    <span>Precio por Unidad $ ${precio}</span>
+                    <h5 class="card-title"> ${name} </h5>
+                    <span> <b> Precio por Unidad $ </b> ${precio}</span>
                     <form id="form${id}" class="m-2 p-2">
-                        <label for="contador${id}">Cantidad</label>
-                        <input type="number" placeholder="0" id="contador${id}">
-                        <button class="btn btn-success m-2 center" id="botonProd${id}">Agregar al Carrito</button>
+                        <span><label for="contador${id}"> <b> Cantidad </b> </label></span>
+                        <span><input type="number" placeholder="0" id="contador${id}"></span>
+                        <span><button class="btn btn-success m-2 center" id="botonProd${id}"> <b> Agregar al Carrito </b></button></span>
                     </form>
                 </div>
             </div>`;
@@ -145,8 +159,8 @@ fetch("https://jsonplaceholder.typicode.com/comments?postId=1")
     json.forEach((comentario) => {
       const comentarioElemento = document.createElement("div");
       comentarioElemento.innerHTML = `
-        <p>Usuario: ${comentario.email}</p>
-        <p>Comentario: ${comentario.body}</p>
+        <p><b>Usuario:</b> ${comentario.email}</p>
+        <p><b>Comentario:</b> ${comentario.body}</p>
       `;
 
       presentacionComentarios.appendChild(comentarioElemento);
